@@ -1,0 +1,5 @@
+.bg-image {
+  background-image: url("../../../assets/home/chef-service.jpg");
+  background-size: cover;
+  background-position: center;
+}

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.drawer-side a.active {
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+}
