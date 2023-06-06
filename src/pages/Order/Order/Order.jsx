@@ -2,15 +2,13 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Cover from "../../shared/Cover/Cover";
 import coverImg from "../../../assets/shop/banner2.jpg";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import useMenu from "../../../hooks/useMenu";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import OrderTab from "../OrderTab/OrderTab";
-import { AuthContext } from "../../../providers/AuthProvider";
 
 const Order = () => {
-  const { loading } = useContext(AuthContext);
   const categories = [
     "salad",
     "pizza",
@@ -23,7 +21,7 @@ const Order = () => {
   const { category } = useParams();
   const initialIndex = categories.indexOf(category);
   const [tabIndex, setTabIndex] = useState(initialIndex);
-  const [menu] = useMenu();
+  const [menu, loading] = useMenu();
 
   const salads = menu.filter((item) => item.category === "salad");
   const pizzas = menu.filter((item) => item.category === "pizza");

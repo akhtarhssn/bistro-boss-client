@@ -16,10 +16,12 @@ import MyOrder from "../pages/dashboard/MyOrder/MyOrder";
 import PaymentHistory from "../pages/dashboard/PaymentHistory/PaymentHistory";
 import Contact from "../pages/Contact/Contact";
 import AdminHome from "../pages/dashboard/AdminHome/AdminHome.jsx";
-import AddItems from "../pages/dashboard/AddItems/AddItems";
+import AddItem from "../pages/dashboard/AddItem/AddItem";
 import ManageItems from "../pages/dashboard/ManageItems/ManageItems";
 import ManageBookings from "../pages/dashboard/ManageBookings/ManageBookings";
 import AllUsers from "../pages/dashboard/AllUsers/AllUsers";
+import AdminRoute from "./AdminRoute";
+import ErrorRoute from "../pages/home/ErrorRoute/ErrorRoute";
 // import Register from "../pages/Register/Register";
 
 const router = createBrowserRouter([
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+      {
+        path: "error",
+        element: <ErrorRoute />,
       },
     ],
   },
@@ -98,20 +104,36 @@ const router = createBrowserRouter([
         element: <MyOrder />,
       },
       {
-        path: "add-items",
-        element: <AddItems />,
+        path: "add-item",
+        element: (
+          <AdminRoute>
+            <AddItem />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-items",
-        element: <ManageItems />,
+        element: (
+          <AdminRoute>
+            <ManageItems />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-bookings",
-        element: <ManageBookings />,
+        element: (
+          <AdminRoute>
+            <ManageBookings />
+          </AdminRoute>
+        ),
       },
       {
         path: "all-users",
-        element: <AllUsers />,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
       },
     ],
   },

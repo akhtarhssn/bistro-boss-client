@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -48,9 +49,7 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     setLoading(true);
     return signOut(auth)
-      .then(() => {
-        window.location.reload();
-      })
+      .then(() => {})
       .catch(() => {});
   };
 

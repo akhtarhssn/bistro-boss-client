@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { FiCalendar, FiHome } from "react-icons/fi";
 import { BiNotepad } from "react-icons/bi";
+import { HiOutlineBars4 } from "react-icons/hi2";
 import { BsBagCheck, BsCartCheck, BsWallet2 } from "react-icons/bs";
 import { MdOutlineContactSupport, MdOutlineRateReview } from "react-icons/md";
 import { FaBars, FaUsers } from "react-icons/fa";
@@ -20,15 +21,17 @@ const Dashboard = () => {
       </Helmet>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content my-10">
+        <div className="drawer-content md:py-10 py-5">
           {/* Page content here */}
+          <div className="px-5">
+            <label
+              htmlFor="my-drawer-2"
+              className="btn btn-primary drawer-button lg:hidden"
+            >
+              <HiOutlineBars4 />
+            </label>
+          </div>
           <Outlet />
-          <label
-            htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
@@ -49,7 +52,7 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/add-items">
+                  <NavLink to="/dashboard/add-item">
                     <ImSpoonKnife /> Add Items
                   </NavLink>
                 </li>
@@ -63,6 +66,12 @@ const Dashboard = () => {
                   <NavLink to="/dashboard/manage-bookings">
                     <BiNotepad />
                     Manage Bookings
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/my-cart">
+                    <BsCartCheck />
+                    My Cart
                   </NavLink>
                 </li>
                 <li>
