@@ -4,6 +4,8 @@ import useCart from "../../../hooks/useCart";
 import CartItem from "./CartItem/CartItem";
 import { AiFillCreditCard } from "react-icons/ai";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [cart, refetch] = useCart();
@@ -28,11 +30,16 @@ const MyCart = () => {
           .then((data) => {
             if (data.deletedCount) {
               refetch();
-              Swal.fire(
-                "Removed!",
-                `${item.name} has been Removed.`,
-                "success"
-              );
+              toast.success(`${item.name} has been Removed.`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             }
           });
       }
@@ -74,9 +81,11 @@ const MyCart = () => {
           </table>
         </div>
         {cart.length !== 0 && (
-          <button className="bg-amber-500 py-3 px-10 rounded-md text-white font-semibold uppercase flex gap-3 items-center mx-auto">
-            <AiFillCreditCard /> Proceed to Checkout
-          </button>
+          <Link to="/dashboard/payment">
+            <button className="bg-amber-500 py-3 px-10 rounded-md text-white font-semibold uppercase flex gap-3 items-center mx-auto">
+              <AiFillCreditCard /> Proceed to Checkout
+            </button>
+          </Link>
         )}
       </div>
     </div>

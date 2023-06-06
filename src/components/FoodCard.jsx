@@ -3,6 +3,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import { toast } from "react-toastify";
 
 const FoodCard = ({ item }) => {
   const { _id, name, recipe, image, price } = item;
@@ -32,19 +33,30 @@ const FoodCard = ({ item }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            toast.success(`${name} added to cart`, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             refetch(); //refetch cart to update current
             // console.log("Data Inserted Successfully");
           }
         });
     } else {
       Swal.fire({
-        title: "You must login to add this Items",
+        title: "Login Required to buy item",
         text: "Proceed to login page? ",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Login!",
+        cancelButtonText: "Not Yet",
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/login", { state: { from: location } });
@@ -59,7 +71,7 @@ const FoodCard = ({ item }) => {
         <img
           src={image}
           alt="Shoes"
-          className="w-full h-[247px] object-cover object-bottom"
+          className="w-full h-[247px] object-cover object-center"
         />
       </figure>
       <p className="absolute right-0 px-6 py-2 rounded-md bg-black text-white font-semibold mr-4 mt-4">

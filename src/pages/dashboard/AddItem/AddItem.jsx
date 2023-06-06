@@ -10,7 +10,7 @@ const AddItem = () => {
 
   const [axiosSecure] = useAxiosSecure();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
     // console.log(data);
 
@@ -37,6 +37,7 @@ const AddItem = () => {
           axiosSecure.post("/add-item", newItem).then((postData) => {
             // console.log("After Posting: ", { postData });
             if (postData.data.insertedId) {
+              reset();
               toast.success("Item Added Successfully!", {
                 position: "top-center",
                 autoClose: 3000,

@@ -6,15 +6,18 @@ import {
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const { signInUser, signInWithGoogle } = useContext(AuthContext);
+  const useEmailRef = useRef();
+  const { signInUser, signInWithGoogle, resetUserPassword } =
+    useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,6 +35,37 @@ const Login = () => {
     } else {
       setDisabled(true);
     }
+  };
+
+  const handleResetPassword = () => {
+    const email = useEmailRef.current.value;
+    console.log(email);
+    resetUserPassword(email)
+      .then(() => {
+        toast.success("Password reset link sent to your email", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.warning(err.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
   };
 
   const handleLogin = (event) => {
@@ -58,9 +92,25 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then(() => {
-        setSuccess("Google Signin Successful");
-        setError("");
+      .then((result) => {
+        const user = result.user;
+        // console.log(user);
+        const saveUser = {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        };
+        fetch("http://localhost:5000/users/", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            setError("");
+          });
         navigate(from, { replace: true });
       })
       .catch((err) => {
@@ -108,6 +158,7 @@ const Login = () => {
                   placeholder="email"
                   className="input input-bordered"
                   required
+                  ref={useEmailRef}
                 />
               </div>
               <div className="form-control">
@@ -122,7 +173,11 @@ const Login = () => {
                   required
                 />
                 <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
+                  <a
+                    href="#"
+                    className="label-text-alt link link-hover"
+                    onClick={handleResetPassword}
+                  >
                     Forgot password?
                   </a>
                 </label>

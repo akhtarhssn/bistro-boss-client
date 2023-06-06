@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const MenuCategory = ({ items, title, subTitle, coverImg }) => {
   return (
-    <div className="my-20 p-5 md:p-0">
+    <div className="my-20 p-5 md:p-5 xl:p-0">
       {coverImg && <Cover img={coverImg} title={title} subTitle={subTitle} />}
-      <div className="grid md:grid-cols-2 gap-10 max-w-7xl container mx-auto my-10 divide-y divide-gray-500">
+      <div className="grid md:grid-cols-2 gap-10 max-w-7xl container mx-auto my-10 divide-y divide-gray-500 md:divide-y-0">
         {items.map((item) => (
           <MenuItem key={item._id} item={item} />
         ))}

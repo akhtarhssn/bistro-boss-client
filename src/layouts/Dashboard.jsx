@@ -9,10 +9,12 @@ import { AiOutlineBars } from "react-icons/ai";
 import { ImSpoonKnife } from "react-icons/im";
 import { Helmet } from "react-helmet-async";
 import useAdmin from "../hooks/useAdmin";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
   // const isAdmin = true;
   const [isAdmin] = useAdmin();
+  const [cart] = useCart();
 
   return (
     <div>
@@ -68,12 +70,14 @@ const Dashboard = () => {
                     Manage Bookings
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to="/dashboard/my-cart">
-                    <BsCartCheck />
-                    My Cart
-                  </NavLink>
-                </li>
+                {cart.length > 0 && (
+                  <li>
+                    <NavLink to="/dashboard/my-cart">
+                      <BsCartCheck />
+                      My Cart
+                    </NavLink>
+                  </li>
+                )}
                 <li>
                   <NavLink to="/dashboard/all-users">
                     {" "}

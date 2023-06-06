@@ -22,6 +22,7 @@ import ManageBookings from "../pages/dashboard/ManageBookings/ManageBookings";
 import AllUsers from "../pages/dashboard/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
 import ErrorRoute from "../pages/home/ErrorRoute/ErrorRoute";
+import Payment from "../pages/dashboard/Payment/Payment";
 // import Register from "../pages/Register/Register";
 
 const router = createBrowserRouter([
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path: "my-order",
         element: <MyOrder />,
+      },
+      {
+        path: "payment",
+        element: <Payment />,
       },
       {
         path: "add-item",

@@ -31,25 +31,25 @@ const Navbar = () => {
       <li>
         <Link>Contact</Link>
       </li>
-      {user && (
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
-      )}
       <li>
         <Link to="/menu">Our Menu</Link>
       </li>
       <li>
         <Link to="/order/salad">Order Food</Link>
       </li>
-      {user && (
+      {user && cart.length > 0 && (
         <li className="text-center">
           <Link to="/dashboard/my-cart">
             <FiShoppingCart className="text-3xl relative" />
             <span className="bg-red-500 absolute -right-1 top-1 py-1 px-2 rounded-full text-sm font-medium text-white">
-              <p>{cart?.length || 0}</p>
+              <p>{cart.length}</p>
             </span>
           </Link>
+        </li>
+      )}
+      {user && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
         </li>
       )}
     </>

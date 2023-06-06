@@ -8,10 +8,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -46,10 +46,16 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  const resetUserPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   const handleLogout = () => {
     setLoading(true);
     return signOut(auth)
-      .then(() => {})
+      .then(() => {
+        window.location.reload();
+      })
       .catch(() => {});
   };
 
@@ -73,6 +79,44 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   const getToken = async (email) => {
+  //     try {
+  //       const response = await axios.post("http://localhost:5000/jwt", {
+  //         email,
+  //       });
+  //       return response.data.token;
+  //     } catch (error) {
+  //       // Handle error if failed to get token
+  //       throw new Error("Failed to get token");
+  //     }
+  //   };
+
+  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     // Get and set Token
+  //     if (currentUser) {
+  //       try {
+  //         const token = await getToken(currentUser.email);
+  //         console.log(token);
+  //         localStorage.setItem("access-token", token);
+  //         setUser(currentUser);
+  //         setLoading(false);
+  //       } catch (error) {
+  //         // Handle error if failed to get token or set user
+  //         setLoading(false);
+  //       }
+  //     } else {
+  //       localStorage.removeItem("access-token");
+  //       setUser(null);
+  //       setLoading(false);
+  //     }
+  //   });
+
+  //   return () => {
+  //     return unsubscribe;
+  //   };
+  // }, []);
+
   const authInfo = {
     user,
     loading,
@@ -81,6 +125,7 @@ const AuthProvider = ({ children }) => {
     handleLogout,
     signInWithGoogle,
     updateUserProfile,
+    resetUserPassword,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

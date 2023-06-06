@@ -61,7 +61,7 @@ const RegisterTest = () => {
     signInWithGoogle()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         const saveUser = {
           name: user.displayName,
           email: user.email,

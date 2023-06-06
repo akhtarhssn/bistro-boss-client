@@ -32,13 +32,13 @@ const Order = () => {
   const popular = menu.filter((item) => item.category === "popular");
 
   // show spinner/loading screen
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[70vh]">
-        <progress className="progress progress-info w-56"></progress>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-[70vh]">
+  //       <progress className="progress progress-info w-56"></progress>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -61,6 +61,11 @@ const Order = () => {
             <Tab>Offered</Tab>
             <Tab>Popular</Tab>
           </TabList>
+          {loading && (
+            <div className="flex items-center justify-center h-[70vh]">
+              <progress className="progress progress-info w-56"></progress>
+            </div>
+          )}
           <TabPanel>
             <OrderTab items={salads} />
           </TabPanel>
