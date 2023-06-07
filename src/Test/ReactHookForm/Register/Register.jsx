@@ -31,7 +31,7 @@ const RegisterTest = () => {
               email: data.email,
               photo: data.photo,
             };
-            fetch("http://localhost:5000/users/", {
+            fetch("https://bistor-boss-server.vercel.app/users/", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -67,7 +67,7 @@ const RegisterTest = () => {
           email: user.email,
           photo: user.photoURL,
         };
-        fetch("http://localhost:5000/users/", {
+        fetch("https://bistor-boss-server.vercel.app/users/", {
           method: "POST",
           headers: {
             "content-type": "application/json",
