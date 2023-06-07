@@ -18,7 +18,7 @@ const useCart = () => {
     // enabled: !!user && loading,
     // queryFn: async () => {
     //   const res = await fetch(
-    //     `https://bistor-boss-server.vercel.app/carts?email=${user?.email}`,
+    //     `http://localhost:5000/carts?email=${user?.email}`,
     //     {
     //       headers: {
     //         authorization: `bearer ${token}`,

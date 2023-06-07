@@ -5,7 +5,7 @@ const useMenu = () => {
   // const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
-  //   fetch("https://bistor-boss-server.vercel.app/menu")
+  //   fetch("http://localhost:5000/menu")
   //     .then((res) => res.json())
   //     .then((data) => {
   //       setMenus(data);
@@ -20,7 +20,7 @@ const useMenu = () => {
   } = useQuery({
     queryKey: ["menu"],
     queryFn: async () => {
-      const res = await fetch("https://bistor-boss-server.vercel.app/menu");
+      const res = await fetch("http://localhost:5000/menu");
       return res.json();
     },
   });

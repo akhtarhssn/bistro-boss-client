@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
       // Get and set Token
       if (currentUser) {
         axios
-          .post("https://bistor-boss-server.vercel.app/jwt", {
+          .post("http://localhost:5000/jwt", {
             email: currentUser.email,
           })
           .then((data) => {
@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
   // useEffect(() => {
   //   const getToken = async (email) => {
   //     try {
-  //       const response = await axios.post("https://bistor-boss-server.vercel.app/jwt", {
+  //       const response = await axios.post("http://localhost:5000/jwt", {
   //         email,
   //       });
   //       return response.data.token;

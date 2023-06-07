@@ -3,20 +3,24 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+// import "./CheckoutForm.css";
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ price, cart }) => {
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const [axiosSecure] = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
-    console.log(price);
-    axiosSecure.post("/create-payment-intent", { price }).then((res) => {
-      setClientSecret(res.data.clientSecret);
-    });
-  }, []);
+    if (price > 0) {
+      console.log(price);
+      axiosSecure.post("/create-payment-intent", { price }).then((res) => {
+        setClientSecret(res.data.clientSecret);
+      });
+    }
+  }, [price, axiosSecure]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +39,7 @@ const CheckoutForm = ({ price }) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -50,19 +54,9 @@ const CheckoutForm = ({ price }) => {
         draggable: true,
         theme: "light",
       });
-    } else {
-      console.log("paymentMethod", paymentMethod);
-      toast.success("Payment Success", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
     }
+
+    setProcessing(true);
 
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -75,7 +69,7 @@ const CheckoutForm = ({ price }) => {
         },
       });
     if (confirmError) {
-      toast.warning(error.message, {
+      toast.warning(confirmError.message, {
         position: "top-center",
         autoClose: false,
         closeOnClick: true,
@@ -85,8 +79,40 @@ const CheckoutForm = ({ price }) => {
       });
     }
     console.log("paymentIntent: ", paymentIntent);
+
+    setProcessing(false);
+
     if (paymentIntent.status === "succeeded") {
-      const transectionId = paymentIntent.id;
+      const transactionId = paymentIntent.id;
+      toast.success(`Payment Success`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      // TODO: Next steps
+      // Save payment info to server
+      const payment = {
+        email: user?.email,
+        transactionId,
+        price,
+        date: new Date(),
+        status: "Pending",
+        quantity: cart.length,
+        cartItems: cart.map((item) => item._id),
+        cartItemNames: cart.map((item) => item.name),
+        menuItems: cart.map((item) => item.itemId),
+      };
+      axiosSecure.post("/payments", payment).then((res) => {
+        console.log(res.data);
+        if (res.data.result.insertedId) {
+          console.log("insert Successful");
+        }
+      });
     }
   };
 
@@ -112,7 +138,7 @@ const CheckoutForm = ({ price }) => {
         <button
           className="btn btn-primary w-full"
           type="submit"
-          disabled={!stripe || !clientSecret}
+          disabled={!stripe || !clientSecret || processing}
         >
           Pay
         </button>

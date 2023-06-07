@@ -43,7 +43,7 @@ const ManageItems = () => {
       }
 
       // if (result.isConfirmed) {
-      //   fetch(`https://bistor-boss-server.vercel.app/delete-item/${item._id}`, {
+      //   fetch(`http://localhost:5000/delete-item/${item._id}`, {
       //     method: "DELETE",
       //   })
       //     .then((res) => res.json())

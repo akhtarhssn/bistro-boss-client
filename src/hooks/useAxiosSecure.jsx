@@ -3,13 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
+const axiosSecure = axios.create({
+  baseURL: "http://localhost:5000",
+});
+
 const useAxiosSecure = () => {
   const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const axiosSecure = axios.create({
-    baseURL: "https://bistor-boss-server.vercel.app/",
-  });
 
   useEffect(() => {
     axiosSecure.interceptors.request.use((config) => {
@@ -33,7 +33,7 @@ const useAxiosSecure = () => {
         return Promise.reject(error);
       }
     );
-  }, [handleLogout, navigate, axiosSecure]);
+  }, [handleLogout, navigate]);
 
   return [axiosSecure];
 };

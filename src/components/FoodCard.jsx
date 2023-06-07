@@ -23,7 +23,7 @@ const FoodCard = ({ item }) => {
     };
     // console.log(item.name);
     if (user) {
-      fetch("https://bistor-boss-server.vercel.app/carts", {
+      fetch("http://localhost:5000/carts", {
         method: "POST",
         headers: {
           "content-type": "application/json",

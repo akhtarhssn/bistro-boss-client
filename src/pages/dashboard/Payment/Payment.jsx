@@ -17,9 +17,11 @@ const Payment = () => {
         <Helmet>
           <title>Bistro Boss | Payment</title>
         </Helmet>
-        <h3 className="text-2xl md:text-4xl font-semibold">Make a Payment</h3>
+        <h3 className="text-2xl md:text-4xl font-semibold">
+          Amount to Pay: ${price}
+        </h3>
         <Elements stripe={stripePromise}>
-          <CheckoutForm price={price} />
+          <CheckoutForm price={price} cart={cart} />
         </Elements>
       </div>
     </div>

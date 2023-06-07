@@ -100,7 +100,7 @@ const Login = () => {
           email: user.email,
           photo: user.photoURL,
         };
-        fetch("https://bistor-boss-server.vercel.app/users/", {
+        fetch("http://localhost:5000/users/", {
           method: "POST",
           headers: {
             "content-type": "application/json",
