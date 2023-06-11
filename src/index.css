@@ -11,4 +11,5 @@
 .test-class {
   background-color: #ddd;
   width: auto;
+  height: fit-content;
 }
