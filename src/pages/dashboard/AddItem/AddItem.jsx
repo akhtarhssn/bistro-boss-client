@@ -33,9 +33,9 @@ const AddItem = () => {
             recipe,
             image: photoUrl,
           };
-          console.log(newItem);
+          // console.log(newItem);
           axiosSecure.post("/add-item", newItem).then((postData) => {
-            // console.log("After Posting: ", { postData });
+            console.log("After Posting: ", { postData });
             if (postData.data.insertedId) {
               reset();
               toast.success("Item Added Successfully!", {

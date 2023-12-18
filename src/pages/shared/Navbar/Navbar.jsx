@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import useCart from "../../../hooks/useCart";
 import useAuth from "../../../hooks/useAuth";
+import useAdmin from "../../../hooks/useAdmin";
 const Navbar = () => {
   const [scrolling, setScrolling] = useState(false);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,9 @@ const Navbar = () => {
       )}
       {user && (
         <li>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to={isAdmin ? "/dashboard/admin-home" : "/dashboard/user-home"}>
+            Dashboard
+          </Link>
         </li>
       )}
     </>
